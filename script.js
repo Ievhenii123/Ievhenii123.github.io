@@ -26,10 +26,13 @@ if (window.screen.width <= 520) {
         [ [], [], [], [] ]
 */
 
+var dateCurPlus1Year = function() {
+    let date = new Date(Date.now() + (365 * 24 * 60 * 60 * 1000));
+    date = date.toUTCString();
+    return date;
+}
 if (!document.cookie.split(';').filter((item) => item.trim().startsWith('best_score=')).length) {
-    let dateCurPlus1Year = new Date(Date.now() + (365 * 24 * 60 * 60 * 1000));
-    dateCurPlus1Year = dateCurPlus1Year.toUTCString();
-    document.cookie = "best_score=0; expires=" + dateCurPlus1Year;
+    document.cookie = "best_score=0; expires=" + dateCurPlus1Year();
 }
 
 // Создаём логику игры...
@@ -469,7 +472,7 @@ function keyPressesHandler(e) {
     scoreContainer.innerText = score;
     if (bestScore < score) {
         bestScore = score;
-        document.cookie = "best_score=" + bestScore;
+        document.cookie = "best_score=" + bestScore + "; expires=" + dateCurPlus1Year();
         bestScoreContainer.innerText = bestScore;
     }
 
